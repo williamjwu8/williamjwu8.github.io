@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="CS 180 Project 0: Becoming Friends with Your Camera" />
+  <title>CS 180 Project 0 - Becoming Friends With Your Camera</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">CS 180 · Project 0</p>
+      <h1>Becoming Friends<br />with My Camera</h1>
+      <p class="subtitle">
+        Exploring how camera position and focal length change perspective.
+      </p>
+      <a class="jump" href="#part1">View the project ↓</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p>
+        This mini-project explores perspective through three experiments: a portrait,
+        an architectural scene, and a dolly zoom. In each case, I changed the camera's
+        position and zoom while trying to keep the main subject approximately the same size.
+      </p>
+    </section>
+
+    <section class="project-section" id="part1">
+      <div class="section-heading">
+        <span>01</span>
+        <div>
+          <p class="kicker">Portrait Perspective</p>
+          <h2>Selfie: the wrong way vs. the right way</h2>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <figure class="photo-card">
+          <img src="assets/selfie_close.jpg" alt="Close-up selfie taken from a short camera distance" />
+          <figcaption>
+            <strong>Close up</strong>
+            <span>Camera very near the face</span>
+          </figcaption>
+        </figure>
+
+        <figure class="photo-card">
+          <img src="assets/selfie_zoom.jpg" alt="Selfie taken farther away while zoomed in" />
+          <figcaption>
+            <strong>Step back + zoom in</strong>
+            <span>Longer camera distance, similar face size</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="explanation">
+        When the camera is very close to the face, small differences in depth become large relative to the distances from the camera. Therefore, features that stick out, like the nose, appear much larger than features farther back, which creates the exaggerated facial proportions. When the camera is moved further back, it reduces the proportion in the differences of the relative distances, which produces a "better looking" portrait.
+      </p>
+    </section>
+
+    <section class="project-section" id="part2">
+      <div class="section-heading">
+        <span>02</span>
+        <div>
+          <p class="kicker">Architectural Perspective</p>
+          <h2>Perspective compression</h2>
+        </div>
+      </div>
+
+      <div class="compare-grid landscape">
+        <figure class="photo-card">
+          <img src="assets/building_zoom.jpg" alt="Building photographed from farther away while zoomed in" />
+          <figcaption>
+            <strong>Farther away + zoomed in</strong>
+            <span>More compressed perspective</span>
+          </figcaption>
+        </figure>
+
+        <figure class="photo-card">
+          <img src="assets/building_close.jpg" alt="Building photographed from closer with a wider field of view" />
+          <figcaption>
+            <strong>Walk closer + zoom out</strong>
+            <span>Stronger perspective and depth</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="explanation">
+        When the camera is close to the building, the differences in depth are large relative to the camera distance, so the nearby parts appear much larger than the further portions. This makes the building look more stretched in depth. Moving farther away reduces the relative distance differences, so the building appears flatter.
+      </p>
+    </section>
+
+    <section class="project-section" id="part3">
+      <div class="section-heading">
+        <span>03</span>
+        <div>
+          <p class="kicker">Dolly Zoom</p>
+          <h2>Moving back while zooming in</h2>
+        </div>
+      </div>
+
+      <div class="gif-wrap">
+        <img src="assets/dolly_zoom.gif" alt="Animated dolly zoom of a water bottle" />
+      </div>
+
+      <p class="explanation">
+        For the dolly zoom, I moved the camera backward while zooming in so that the water bottle stayed approximately the same size. The bottle remains relatively stable, but the field of view narrows and the background appears to change scale. This creates the dolly zoom affect.
+      </p>
+
+      <div class="frames">
+        <img src="assets/bottle1.jpg" alt="Dolly zoom frame 1" />
+        <img src="assets/bottle2.jpg" alt="Dolly zoom frame 2" />
+        <img src="assets/bottle3.jpg" alt="Dolly zoom frame 3" />
+        <img src="assets/bottle4.jpg" alt="Dolly zoom frame 4" />
+        <img src="assets/bottle5.jpg" alt="Dolly zoom frame 5" />
+        <img src="assets/bottle6.jpg" alt="Dolly zoom frame 6" />
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>CS 180 · Project 0 · Fall 2026</p>
+  </footer>
+</body>
+</html>
