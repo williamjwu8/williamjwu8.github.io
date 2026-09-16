@@ -1,0 +1,20 @@
+[
+  {
+    "name": "roses",
+    "title": "[Roses]",
+    "source": "http://www.loc.gov/item/2018681270/",
+    "download": "https://tile.loc.gov/storage-services/master/pnp/prok/00100/00104u.tif"
+  },
+  {
+    "name": "model_railroad",
+    "title": "[Model railroad]",
+    "source": "http://www.loc.gov/item/2018681229/",
+    "download": "https://tile.loc.gov/storage-services/master/pnp/prok/00000/00063u.tif"
+  },
+  {
+    "name": "railroad_settlement",
+    "title": "[Railroad settlement near the Maselgskaia Station]",
+    "source": "http://www.loc.gov/item/2018679232/",
+    "download": "https://tile.loc.gov/storage-services/master/pnp/prok/00300/00307u.tif"
+  }
+]

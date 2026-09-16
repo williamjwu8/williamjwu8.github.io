@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 180 Project 1 — Colorizing Images</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+<a href="../index.html">← All projects</a>
+<h1>Project 1: Colorizing Images</h1>
+<p>William Wu · CS 180</p>
+</header>
+<main>
+<section id="method">
+<h2>1. Method</h2>
+<p>I split each scan into blue, green, and red channels. I keep blue fixed, align green and red to it, and combine the channels into an RGB image.</p>
+<p><strong>Single scale:</strong> I test shifts from −30 to +30 pixels in both directions and choose the smallest L2 error: the square root of the sum of squared pixel differences. I convert values to floats in [0, 1] and ignore a 10% border on each side when scoring.</p>
+<p><strong>Image pyramid:</strong> I blur and halve the images until the longest side is at most 256 pixels. I search ±30 pixels at this size, double the estimated shift at each larger size, and search ±2 pixels around it. This handles large shifts without a wide search at full resolution. The final color image uses the original channels.</p>
+</section>
+<section id="results">
+<h2>2. Results</h2>
+<p>All inputs were aligned at their original resolution. G and R show shifts relative to blue in <strong>(x, y)</strong> order. Click a current result to open the full-resolution image.</p>
+<h3>Single-scale L2: small JPEGs</h3>
+<div class="gallery">
+<figure>
+<a href="assets/cathedral_single.jpg"><img src="assets/cathedral_single.jpg" alt="Cathedral: Cathedral" loading="lazy" width="390" height="341"></a>
+<figcaption><strong>Cathedral</strong><br>G: (2, 5) · R: (3, 12)</figcaption>
+</figure>
+<figure>
+<a href="assets/monastery_single.jpg"><img src="assets/monastery_single.jpg" alt="Monastery: Monastery" loading="lazy" width="391" height="341"></a>
+<figcaption><strong>Monastery</strong><br>G: (2, -3) · R: (2, 3)</figcaption>
+</figure>
+<figure>
+<a href="assets/tobolsk_single.jpg"><img src="assets/tobolsk_single.jpg" alt="Tobolsk: Tobolsk" loading="lazy" width="396" height="341"></a>
+<figcaption><strong>Tobolsk</strong><br>G: (3, 3) · R: (3, 6)</figcaption>
+</figure>
+</div>
+
+<h3>Pyramid: all 14 provided images</h3>
+<p>These are the current results using edges, explained below. The required raw-pixel L2 results are under the comparison dropdown.</p>
+<div class="gallery">
+<figure>
+<a href="assets/full/cathedral_edges.jpg"><img src="assets/cathedral_edges.jpg" alt="Cathedral: Cathedral" loading="lazy" width="390" height="341"></a>
+<figcaption><strong>Cathedral</strong><br>G: (2, 5) · R: (3, 12)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/church_edges.jpg"><img src="assets/church_edges.jpg" alt="Church: Church" loading="lazy" width="1000" height="881"></a>
+<figcaption><strong>Church</strong><br>G: (4, 25) · R: (-4, 58)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/emir_edges.jpg"><img src="assets/emir_edges.jpg" alt="Emir: Emir" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>Emir</strong><br>G: (24, 49) · R: (40, 107)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/harvesters_edges.jpg"><img src="assets/harvesters_edges.jpg" alt="Harvesters: Harvesters" loading="lazy" width="1000" height="874"></a>
+<figcaption><strong>Harvesters</strong><br>G: (17, 60) · R: (14, 124)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/icon_edges.jpg"><img src="assets/icon_edges.jpg" alt="Icon: Icon" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>Icon</strong><br>G: (17, 42) · R: (23, 90)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/ilemselga_edges.jpg"><img src="assets/ilemselga_edges.jpg" alt="Ilemselga: Ilemselga" loading="lazy" width="1000" height="861"></a>
+<figcaption><strong>Ilemselga</strong><br>G: (7, 40) · R: (11, 131)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/melons_edges.jpg"><img src="assets/melons_edges.jpg" alt="Melons: Melons" loading="lazy" width="1000" height="860"></a>
+<figcaption><strong>Melons</strong><br>G: (10, 80) · R: (13, 177)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/monastery_edges.jpg"><img src="assets/monastery_edges.jpg" alt="Monastery: Monastery" loading="lazy" width="391" height="341"></a>
+<figcaption><strong>Monastery</strong><br>G: (2, -3) · R: (2, 3)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/religous_painting_edges.jpg"><img src="assets/religous_painting_edges.jpg" alt="Religious painting: Religious painting" loading="lazy" width="1000" height="853"></a>
+<figcaption><strong>Religious painting</strong><br>G: (4, 30) · R: (6, 70)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/self_portrait_edges.jpg"><img src="assets/self_portrait_edges.jpg" alt="Self Portrait: Self Portrait" loading="lazy" width="1000" height="853"></a>
+<figcaption><strong>Self Portrait</strong><br>G: (29, 78) · R: (37, 176)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/siren_edges.jpg"><img src="assets/siren_edges.jpg" alt="Siren: Siren" loading="lazy" width="1000" height="851"></a>
+<figcaption><strong>Siren</strong><br>G: (-6, 49) · R: (-24, 96)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/three_generations_edges.jpg"><img src="assets/three_generations_edges.jpg" alt="Three Generations: Three Generations" loading="lazy" width="1000" height="864"></a>
+<figcaption><strong>Three Generations</strong><br>G: (12, 54) · R: (9, 111)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/tobolsk_edges.jpg"><img src="assets/tobolsk_edges.jpg" alt="Tobolsk: Tobolsk" loading="lazy" width="396" height="341"></a>
+<figcaption><strong>Tobolsk</strong><br>G: (3, 3) · R: (3, 6)</figcaption>
+</figure>
+<figure>
+<a href="assets/full/wharf_edges.jpg"><img src="assets/wharf_edges.jpg" alt="Wharf: Wharf" loading="lazy" width="1000" height="863"></a>
+<figcaption><strong>Wharf</strong><br>G: (-7, 15) · R: (-16, 83)</figcaption>
+</figure>
+</div>
+
+<details>
+<summary>Raw-pixel L2 pyramid results and offsets</summary>
+<p>This version compares pixel brightness. It fails on Church and Emir; edge matching improves both.</p>
+<div class="gallery">
+<figure>
+<a href="assets/cathedral_raw.jpg"><img src="assets/cathedral_raw.jpg" alt="Cathedral: Cathedral" loading="lazy" width="390" height="341"></a>
+<figcaption><strong>Cathedral</strong><br>G: (2, 5) · R: (3, 12)</figcaption>
+</figure>
+<figure>
+<a href="assets/church_raw.jpg"><img src="assets/church_raw.jpg" alt="Church: Church" loading="lazy" width="1000" height="881"></a>
+<figcaption><strong>Church</strong><br>G: (4, 25) · R: (266, 64)</figcaption>
+</figure>
+<figure>
+<a href="assets/emir_raw.jpg"><img src="assets/emir_raw.jpg" alt="Emir: Emir" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>Emir</strong><br>G: (24, 49) · R: (57, 103)</figcaption>
+</figure>
+<figure>
+<a href="assets/harvesters_raw.jpg"><img src="assets/harvesters_raw.jpg" alt="Harvesters: Harvesters" loading="lazy" width="1000" height="874"></a>
+<figcaption><strong>Harvesters</strong><br>G: (16, 59) · R: (13, 124)</figcaption>
+</figure>
+<figure>
+<a href="assets/icon_raw.jpg"><img src="assets/icon_raw.jpg" alt="Icon: Icon" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>Icon</strong><br>G: (17, 41) · R: (23, 90)</figcaption>
+</figure>
+<figure>
+<a href="assets/ilemselga_raw.jpg"><img src="assets/ilemselga_raw.jpg" alt="Ilemselga: Ilemselga" loading="lazy" width="1000" height="861"></a>
+<figcaption><strong>Ilemselga</strong><br>G: (7, 39) · R: (11, 130)</figcaption>
+</figure>
+<figure>
+<a href="assets/melons_raw.jpg"><img src="assets/melons_raw.jpg" alt="Melons: Melons" loading="lazy" width="1000" height="860"></a>
+<figcaption><strong>Melons</strong><br>G: (11, 82) · R: (13, 178)</figcaption>
+</figure>
+<figure>
+<a href="assets/monastery_raw.jpg"><img src="assets/monastery_raw.jpg" alt="Monastery: Monastery" loading="lazy" width="391" height="341"></a>
+<figcaption><strong>Monastery</strong><br>G: (2, -3) · R: (2, 3)</figcaption>
+</figure>
+<figure>
+<a href="assets/religous_painting_raw.jpg"><img src="assets/religous_painting_raw.jpg" alt="Religious painting: Religious painting" loading="lazy" width="1000" height="853"></a>
+<figcaption><strong>Religious painting</strong><br>G: (3, 28) · R: (7, 68)</figcaption>
+</figure>
+<figure>
+<a href="assets/self_portrait_raw.jpg"><img src="assets/self_portrait_raw.jpg" alt="Self Portrait: Self Portrait" loading="lazy" width="1000" height="853"></a>
+<figcaption><strong>Self Portrait</strong><br>G: (29, 79) · R: (37, 176)</figcaption>
+</figure>
+<figure>
+<a href="assets/siren_raw.jpg"><img src="assets/siren_raw.jpg" alt="Siren: Siren" loading="lazy" width="1000" height="851"></a>
+<figcaption><strong>Siren</strong><br>G: (-6, 49) · R: (-25, 96)</figcaption>
+</figure>
+<figure>
+<a href="assets/three_generations_raw.jpg"><img src="assets/three_generations_raw.jpg" alt="Three Generations: Three Generations" loading="lazy" width="1000" height="864"></a>
+<figcaption><strong>Three Generations</strong><br>G: (14, 53) · R: (11, 112)</figcaption>
+</figure>
+<figure>
+<a href="assets/tobolsk_raw.jpg"><img src="assets/tobolsk_raw.jpg" alt="Tobolsk: Tobolsk" loading="lazy" width="396" height="341"></a>
+<figcaption><strong>Tobolsk</strong><br>G: (3, 3) · R: (3, 6)</figcaption>
+</figure>
+<figure>
+<a href="assets/wharf_raw.jpg"><img src="assets/wharf_raw.jpg" alt="Wharf: Wharf" loading="lazy" width="1000" height="863"></a>
+<figcaption><strong>Wharf</strong><br>G: (-7, 15) · R: (-16, 83)</figcaption>
+</figure>
+</div>
+</details>
+<h3>Three additional images</h3>
+<p>I downloaded three original glass-plate scans from the Library of Congress and used the same settings. Each pair shows raw-pixel L2 and edge-based pyramid alignment.</p>
+<h4>Model railroad</h4>
+<p><a href="https://www.loc.gov/item/2018681229/">Source record</a> · <a href="https://tile.loc.gov/storage-services/master/pnp/prok/00000/00063u.tif">Original scan</a></p>
+<div class="comparison"><figure>
+<a href="assets/model_railroad_raw.jpg"><img src="assets/model_railroad_raw.jpg" alt="Model railroad: Raw-pixel L2" loading="lazy" width="1000" height="854"></a>
+<figcaption><strong>Raw-pixel L2</strong><br>G: (28, 54) · R: (40, 121)</figcaption>
+</figure><figure>
+<a href="assets/full/model_railroad_edges.jpg"><img src="assets/model_railroad_edges.jpg" alt="Model railroad: Current: edges" loading="lazy" width="1000" height="854"></a>
+<figcaption><strong>Current: edges</strong><br>G: (27, 54) · R: (41, 122)</figcaption>
+</figure></div>
+<h4>Railroad settlement</h4>
+<p><a href="https://www.loc.gov/item/2018679232/">Source record</a> · <a href="https://tile.loc.gov/storage-services/master/pnp/prok/00300/00307u.tif">Original scan</a></p>
+<div class="comparison"><figure>
+<a href="assets/railroad_settlement_raw.jpg"><img src="assets/railroad_settlement_raw.jpg" alt="Railroad settlement: Raw-pixel L2" loading="lazy" width="1000" height="854"></a>
+<figcaption><strong>Raw-pixel L2</strong><br>G: (20, 17) · R: (39, 86)</figcaption>
+</figure><figure>
+<a href="assets/full/railroad_settlement_edges.jpg"><img src="assets/railroad_settlement_edges.jpg" alt="Railroad settlement: Current: edges" loading="lazy" width="1000" height="854"></a>
+<figcaption><strong>Current: edges</strong><br>G: (19, 17) · R: (38, 86)</figcaption>
+</figure></div>
+<h4>Roses</h4>
+<p><a href="https://www.loc.gov/item/2018681270/">Source record</a> · <a href="https://tile.loc.gov/storage-services/master/pnp/prok/00100/00104u.tif">Original scan</a></p>
+<div class="comparison"><figure>
+<a href="assets/roses_raw.jpg"><img src="assets/roses_raw.jpg" alt="Roses: Raw-pixel L2" loading="lazy" width="1000" height="850"></a>
+<figcaption><strong>Raw-pixel L2</strong><br>G: (20, 31) · R: (35, 82)</figcaption>
+</figure><figure>
+<a href="assets/full/roses_edges.jpg"><img src="assets/roses_edges.jpg" alt="Roses: Current: edges" loading="lazy" width="1000" height="850"></a>
+<figcaption><strong>Current: edges</strong><br>G: (21, 31) · R: (35, 82)</figcaption>
+</figure></div>
+</section>
+<section id="edges">
+<h2>3. Edge improvement</h2>
+<p>The same object can have different brightness in each color channel. Raw-pixel matching left Church and Emir misaligned.</p>
+<p>I use Sobel filters to measure horizontal and vertical brightness changes. Combining them as √(dx² + dy²) gives an edge-strength image. I compare edge maps at each pyramid level using mean squared error, then apply the selected shifts to the original color channels.</p>
+<p>This version also scores only overlapping interior pixels, excluding wrapped pixels. It uses the same search settings for every image.</p>
+<h3>Church</h3>
+<div class="comparison"><figure>
+<a href="assets/church_raw.jpg"><img src="assets/church_raw.jpg" alt="Church: Before: raw-pixel L2" loading="lazy" width="1000" height="881"></a>
+<figcaption><strong>Before: raw-pixel L2</strong><br>G: (4, 25) · R: (266, 64)</figcaption>
+</figure><figure>
+<a href="assets/full/church_edges.jpg"><img src="assets/church_edges.jpg" alt="Church: After: edges" loading="lazy" width="1000" height="881"></a>
+<figcaption><strong>After: edges</strong><br>G: (4, 25) · R: (-4, 58)</figcaption>
+</figure></div>
+<h3>Emir</h3>
+<div class="comparison"><figure>
+<a href="assets/emir_raw.jpg"><img src="assets/emir_raw.jpg" alt="Emir: Before: raw-pixel L2" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>Before: raw-pixel L2</strong><br>G: (24, 49) · R: (57, 103)</figcaption>
+</figure><figure>
+<a href="assets/full/emir_edges.jpg"><img src="assets/emir_edges.jpg" alt="Emir: After: edges" loading="lazy" width="1000" height="867"></a>
+<figcaption><strong>After: edges</strong><br>G: (24, 49) · R: (40, 107)</figcaption>
+</figure></div>
+<p>The edge results have fewer doubled outlines. Colored scan borders remain because I did not implement border removal. Movement between exposures cannot be fully corrected by one translation.</p>
+</section>
+<p class="downloads"><a href="alignment_methods.py" download>Alignment code</a> · <a href="results.json" download>Provided-image measurements</a> · <a href="extra_results.json" download>Additional-image measurements</a></p>
+</main>
+<footer>Images: Prokudin-Gorskii photograph collection, Library of Congress, Prints and Photographs Division.</footer>
+</body>
+</html>

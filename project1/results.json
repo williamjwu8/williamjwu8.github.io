@@ -1,0 +1,472 @@
+[
+  {
+    "name": "cathedral",
+    "filename": "cathedral.jpg",
+    "width": 390,
+    "height": 341,
+    "raw": {
+      "green": [
+        2,
+        5
+      ],
+      "red": [
+        3,
+        12
+      ],
+      "seconds": 0.32,
+      "image": "assets/cathedral_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        2,
+        5
+      ],
+      "red": [
+        3,
+        12
+      ],
+      "seconds": 0.23,
+      "image": "assets/cathedral_edges.jpg",
+      "full_image": "assets/full/cathedral_edges.jpg"
+    },
+    "single": {
+      "green": [
+        2,
+        5
+      ],
+      "red": [
+        3,
+        12
+      ],
+      "seconds": 0.6,
+      "image": "assets/cathedral_single.jpg"
+    }
+  },
+  {
+    "name": "church",
+    "filename": "church.tif",
+    "width": 3634,
+    "height": 3202,
+    "raw": {
+      "green": [
+        4,
+        25
+      ],
+      "red": [
+        266,
+        64
+      ],
+      "seconds": 1.59,
+      "image": "assets/church_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        4,
+        25
+      ],
+      "red": [
+        -4,
+        58
+      ],
+      "seconds": 1.27,
+      "image": "assets/church_edges.jpg",
+      "full_image": "assets/full/church_edges.jpg"
+    }
+  },
+  {
+    "name": "emir",
+    "filename": "emir.tif",
+    "width": 3702,
+    "height": 3209,
+    "raw": {
+      "green": [
+        24,
+        49
+      ],
+      "red": [
+        57,
+        103
+      ],
+      "seconds": 1.65,
+      "image": "assets/emir_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        24,
+        49
+      ],
+      "red": [
+        40,
+        107
+      ],
+      "seconds": 1.23,
+      "image": "assets/emir_edges.jpg",
+      "full_image": "assets/full/emir_edges.jpg"
+    }
+  },
+  {
+    "name": "harvesters",
+    "filename": "harvesters.tif",
+    "width": 3683,
+    "height": 3218,
+    "raw": {
+      "green": [
+        16,
+        59
+      ],
+      "red": [
+        13,
+        124
+      ],
+      "seconds": 1.49,
+      "image": "assets/harvesters_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        17,
+        60
+      ],
+      "red": [
+        14,
+        124
+      ],
+      "seconds": 1.27,
+      "image": "assets/harvesters_edges.jpg",
+      "full_image": "assets/full/harvesters_edges.jpg"
+    }
+  },
+  {
+    "name": "icon",
+    "filename": "icon.tif",
+    "width": 3741,
+    "height": 3244,
+    "raw": {
+      "green": [
+        17,
+        41
+      ],
+      "red": [
+        23,
+        90
+      ],
+      "seconds": 1.54,
+      "image": "assets/icon_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        17,
+        42
+      ],
+      "red": [
+        23,
+        90
+      ],
+      "seconds": 1.23,
+      "image": "assets/icon_edges.jpg",
+      "full_image": "assets/full/icon_edges.jpg"
+    }
+  },
+  {
+    "name": "ilemselga",
+    "filename": "ilemselga.tif",
+    "width": 3800,
+    "height": 3270,
+    "raw": {
+      "green": [
+        7,
+        39
+      ],
+      "red": [
+        11,
+        130
+      ],
+      "seconds": 1.56,
+      "image": "assets/ilemselga_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        7,
+        40
+      ],
+      "red": [
+        11,
+        131
+      ],
+      "seconds": 1.42,
+      "image": "assets/ilemselga_edges.jpg",
+      "full_image": "assets/full/ilemselga_edges.jpg"
+    }
+  },
+  {
+    "name": "melons",
+    "filename": "melons.tif",
+    "width": 3770,
+    "height": 3241,
+    "raw": {
+      "green": [
+        11,
+        82
+      ],
+      "red": [
+        13,
+        178
+      ],
+      "seconds": 1.54,
+      "image": "assets/melons_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        10,
+        80
+      ],
+      "red": [
+        13,
+        177
+      ],
+      "seconds": 1.29,
+      "image": "assets/melons_edges.jpg",
+      "full_image": "assets/full/melons_edges.jpg"
+    }
+  },
+  {
+    "name": "monastery",
+    "filename": "monastery.jpg",
+    "width": 391,
+    "height": 341,
+    "raw": {
+      "green": [
+        2,
+        -3
+      ],
+      "red": [
+        2,
+        3
+      ],
+      "seconds": 0.35,
+      "image": "assets/monastery_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        2,
+        -3
+      ],
+      "red": [
+        2,
+        3
+      ],
+      "seconds": 0.22,
+      "image": "assets/monastery_edges.jpg",
+      "full_image": "assets/full/monastery_edges.jpg"
+    },
+    "single": {
+      "green": [
+        2,
+        -3
+      ],
+      "red": [
+        2,
+        3
+      ],
+      "seconds": 0.64,
+      "image": "assets/monastery_single.jpg"
+    }
+  },
+  {
+    "name": "religous_painting",
+    "filename": "religous_painting.tif",
+    "width": 3742,
+    "height": 3193,
+    "raw": {
+      "green": [
+        3,
+        28
+      ],
+      "red": [
+        7,
+        68
+      ],
+      "seconds": 1.66,
+      "image": "assets/religous_painting_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        4,
+        30
+      ],
+      "red": [
+        6,
+        70
+      ],
+      "seconds": 1.81,
+      "image": "assets/religous_painting_edges.jpg",
+      "full_image": "assets/full/religous_painting_edges.jpg"
+    }
+  },
+  {
+    "name": "self_portrait",
+    "filename": "self_portrait.tif",
+    "width": 3810,
+    "height": 3251,
+    "raw": {
+      "green": [
+        29,
+        79
+      ],
+      "red": [
+        37,
+        176
+      ],
+      "seconds": 1.62,
+      "image": "assets/self_portrait_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        29,
+        78
+      ],
+      "red": [
+        37,
+        176
+      ],
+      "seconds": 1.67,
+      "image": "assets/self_portrait_edges.jpg",
+      "full_image": "assets/full/self_portrait_edges.jpg"
+    }
+  },
+  {
+    "name": "siren",
+    "filename": "siren.tif",
+    "width": 3817,
+    "height": 3250,
+    "raw": {
+      "green": [
+        -6,
+        49
+      ],
+      "red": [
+        -25,
+        96
+      ],
+      "seconds": 1.56,
+      "image": "assets/siren_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        -6,
+        49
+      ],
+      "red": [
+        -24,
+        96
+      ],
+      "seconds": 1.43,
+      "image": "assets/siren_edges.jpg",
+      "full_image": "assets/full/siren_edges.jpg"
+    }
+  },
+  {
+    "name": "three_generations",
+    "filename": "three_generations.tif",
+    "width": 3714,
+    "height": 3209,
+    "raw": {
+      "green": [
+        14,
+        53
+      ],
+      "red": [
+        11,
+        112
+      ],
+      "seconds": 2.24,
+      "image": "assets/three_generations_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        12,
+        54
+      ],
+      "red": [
+        9,
+        111
+      ],
+      "seconds": 1.38,
+      "image": "assets/three_generations_edges.jpg",
+      "full_image": "assets/full/three_generations_edges.jpg"
+    }
+  },
+  {
+    "name": "tobolsk",
+    "filename": "tobolsk.jpg",
+    "width": 396,
+    "height": 341,
+    "raw": {
+      "green": [
+        3,
+        3
+      ],
+      "red": [
+        3,
+        6
+      ],
+      "seconds": 0.84,
+      "image": "assets/tobolsk_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        3,
+        3
+      ],
+      "red": [
+        3,
+        6
+      ],
+      "seconds": 0.21,
+      "image": "assets/tobolsk_edges.jpg",
+      "full_image": "assets/full/tobolsk_edges.jpg"
+    },
+    "single": {
+      "green": [
+        3,
+        3
+      ],
+      "red": [
+        3,
+        6
+      ],
+      "seconds": 0.65,
+      "image": "assets/tobolsk_single.jpg"
+    }
+  },
+  {
+    "name": "wharf",
+    "filename": "wharf.tif",
+    "width": 3761,
+    "height": 3244,
+    "raw": {
+      "green": [
+        -7,
+        15
+      ],
+      "red": [
+        -16,
+        83
+      ],
+      "seconds": 1.68,
+      "image": "assets/wharf_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        -7,
+        15
+      ],
+      "red": [
+        -16,
+        83
+      ],
+      "seconds": 1.49,
+      "image": "assets/wharf_edges.jpg",
+      "full_image": "assets/full/wharf_edges.jpg"
+    }
+  }
+]

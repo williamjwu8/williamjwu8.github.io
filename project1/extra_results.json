@@ -1,0 +1,95 @@
+[
+  {
+    "name": "model_railroad",
+    "filename": "model_railroad.tif",
+    "width": 3762,
+    "height": 3212,
+    "raw": {
+      "green": [
+        28,
+        54
+      ],
+      "red": [
+        40,
+        121
+      ],
+      "seconds": 1.79,
+      "image": "assets/model_railroad_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        27,
+        54
+      ],
+      "red": [
+        41,
+        122
+      ],
+      "seconds": 1.29,
+      "image": "assets/model_railroad_edges.jpg",
+      "full_image": "assets/full/model_railroad_edges.jpg"
+    }
+  },
+  {
+    "name": "railroad_settlement",
+    "filename": "railroad_settlement.tif",
+    "width": 3800,
+    "height": 3244,
+    "raw": {
+      "green": [
+        20,
+        17
+      ],
+      "red": [
+        39,
+        86
+      ],
+      "seconds": 1.95,
+      "image": "assets/railroad_settlement_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        19,
+        17
+      ],
+      "red": [
+        38,
+        86
+      ],
+      "seconds": 1.24,
+      "image": "assets/railroad_settlement_edges.jpg",
+      "full_image": "assets/full/railroad_settlement_edges.jpg"
+    }
+  },
+  {
+    "name": "roses",
+    "filename": "roses.tif",
+    "width": 3762,
+    "height": 3196,
+    "raw": {
+      "green": [
+        20,
+        31
+      ],
+      "red": [
+        35,
+        82
+      ],
+      "seconds": 1.62,
+      "image": "assets/roses_raw.jpg"
+    },
+    "edges": {
+      "green": [
+        21,
+        31
+      ],
+      "red": [
+        35,
+        82
+      ],
+      "seconds": 1.32,
+      "image": "assets/roses_edges.jpg",
+      "full_image": "assets/full/roses_edges.jpg"
+    }
+  }
+]
