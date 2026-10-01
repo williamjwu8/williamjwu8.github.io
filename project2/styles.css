@@ -1,0 +1,31 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #202a2a; background: #fafaf7; line-height: 1.6; }
+body { max-width: 1120px; margin: auto; padding: 32px 24px; }
+a { color: #24644e; text-underline-offset: 3px; }
+header { border-bottom: 2px solid #abc4b3; padding-bottom: 20px; }
+h1 { font-size: 2.8rem; line-height: 1.1; margin: 16px 0; }
+h2 { margin-top: 36px; font-size: 1.9rem; } h3 { margin-top: 32px; font-size: 1.3rem; }
+h4 { font-size: 1.05rem; } p { max-width: 100ch; }
+nav { display: flex; gap: 24px; flex-wrap: wrap; }
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.gallery.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+figure { margin: 0; } img { display: block; width: 100%; height: auto; }
+figcaption { margin-top: 6px; font-size: .85rem; }
+.kernels { max-width: 450px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kernels img { height: 160px; object-fit: contain; image-rendering: pixelated; background: #ddd; }
+details { margin: 18px 0; padding: 12px 16px; background: #eaf0ea; border-radius: 6px; }
+summary { cursor: pointer; font-weight: 600; } pre { overflow-x: auto; line-height: 1.5; } code { font-size: .9em; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid #cbd6cc; white-space: nowrap; }
+.table-scroll { overflow-x: auto; } footer { margin-top: 40px; border-top: 1px solid #abc4b3; padding-top: 20px; }
+section { scroll-margin-top: 20px; }
+@media (max-width: 760px) { .gallery, .gallery.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .gallery, .gallery.three { grid-template-columns: 1fr; } body { padding: 20px 14px; } }
+
+:root { font-family: Arial, sans-serif; color: #222; background: #fff; line-height: 1.5; }
+body { max-width: 1100px; }
+h1 { font-size: 2rem; } h2 { font-size: 1.5rem; }
+a { color: #2458a6; }
+header { border-bottom: 1px solid #ccc; }
+details { background: #f4f4f4; }
+.gallery.single { max-width: 260px; grid-template-columns: 1fr; }
+
