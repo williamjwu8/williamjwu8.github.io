@@ -29,3 +29,9 @@ header { border-bottom: 1px solid #ccc; }
 details { background: #f4f4f4; }
 .gallery.single { max-width: 260px; grid-template-columns: 1fr; }
 
+
+.gallery.stack { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.gallery.decomposition { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gallery.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .gallery.stack { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .gallery.stack, .gallery.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
