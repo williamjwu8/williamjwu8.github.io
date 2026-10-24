@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CS 180 · Project 3</title><link rel="stylesheet" href="styles.css"></head><body>
+<header><h1>Project 3: Fun with Flow Models</h1><p>William Wu · CS 180</p>
+<nav aria-label="Project sections"><a href="#parta">Part A: Pretrained flow model</a><a href="#partb">Part B: Training on MNIST</a></nav></header><main>
+<p>I used a pretrained model to edit photos and make illusions in Part A. In Part B, I trained smaller UNets on handwritten digits.</p>
+<section id="parta"><h2>Part A: Exploring a Pretrained Flow Model</h2>
+<p>I used PixNerd at 512 × 512 resolution. For sampling, I used Euler steps of 0.02. The guided experiments use weight 7 and an empty prompt for the unconditional prediction. My base seed was 180.</p>
+<section id="a11"><h3>1.1 Noisy Training Inputs</h3>
+<p>I cropped my building photo to a square and mixed it with Gaussian noise: <code>xₜ = (1 − t)ε + tx₁</code>. I reused the same noise at all three times. Larger t keeps more of the original image.</p>
+<figure class=""><a href="assets/parta/training_inputs.png"><img src="assets/parta/training_inputs.png" width="1593" height="411" alt="Original and noisy inputs at t = 0.25, 0.50, and 0.75."></a><figcaption>Original and noisy inputs at t = 0.25, 0.50, and 0.75.</figcaption></figure>
+</section>
+<section id="a12"><h3>1.2 Gaussian Denoising</h3>
+<p>I divided each noisy image by t to restore its brightness, then tried Gaussian blur with σ = 1, 2, 4, 8, and 16. I kept the result with the lowest MSE against the original. Stronger blur removes more noise, but also wipes out the building details.</p>
+<figure class="medium"><a href="assets/parta/blur_0.25.png"><img src="assets/parta/blur_0.25.png" width="793" height="411" alt="t = 0.25: noisy input and Gaussian blur, σ = 8."></a><figcaption>t = 0.25: noisy input and Gaussian blur, σ = 8.</figcaption></figure>
+<figure class="medium"><a href="assets/parta/blur_0.50.png"><img src="assets/parta/blur_0.50.png" width="793" height="411" alt="t = 0.50: noisy input and Gaussian blur, σ = 4."></a><figcaption>t = 0.50: noisy input and Gaussian blur, σ = 4.</figcaption></figure>
+<figure class="medium"><a href="assets/parta/blur_0.75.png"><img src="assets/parta/blur_0.75.png" width="793" height="411" alt="t = 0.75: noisy input and Gaussian blur, σ = 1."></a><figcaption>t = 0.75: noisy input and Gaussian blur, σ = 1.</figcaption></figure>
+</section>
+<section id="a13"><h3>1.3 One-Step Denoising</h3>
+<p>I used <code>xₜ + (1 − t)vθ(xₜ, t)</code> with the prompt “a high quality photo.” At t = 0.25, the entrance looks smooth and distorted. At higher times, the result keeps more of the original structure.</p>
+<figure class=""><a href="assets/parta/one_step_0.25.png"><img src="assets/parta/one_step_0.25.png" width="1193" height="411" alt="t = 0.25: original, noisy input, and one-step estimate."></a><figcaption>t = 0.25: original, noisy input, and one-step estimate.</figcaption></figure>
+<figure class=""><a href="assets/parta/one_step_0.50.png"><img src="assets/parta/one_step_0.50.png" width="1193" height="411" alt="t = 0.50: original, noisy input, and one-step estimate."></a><figcaption>t = 0.50: original, noisy input, and one-step estimate.</figcaption></figure>
+<figure class=""><a href="assets/parta/one_step_0.75.png"><img src="assets/parta/one_step_0.75.png" width="1193" height="411" alt="t = 0.75: original, noisy input, and one-step estimate."></a><figcaption>t = 0.75: original, noisy input, and one-step estimate.</figcaption></figure>
+</section>
+<section id="a14"><h3>1.4 Visualizing Velocity</h3>
+<p>I compared the predicted update with the true update <code>x₁ − xₜ</code>. Gray means zero in both update images, and all rows use the same scales. The RGB RMS error is larger around edges and tree branches, especially at t = 0.25.</p>
+<figure class="original"><a href="assets/parta/original_building.png"><img src="assets/parta/original_building.png" width="512" height="512" alt="Original building photo."></a><figcaption>Original building photo.</figcaption></figure>
+<figure class=""><a href="assets/parta/velocity_0.25.png"><img src="assets/parta/velocity_0.25.png" width="1558" height="411" alt="t = 0.25: noisy image, predicted update, true update, and RGB RMS error."></a><figcaption>t = 0.25: noisy image, predicted update, true update, and RGB RMS error.</figcaption></figure>
+<figure class=""><a href="assets/parta/velocity_0.50.png"><img src="assets/parta/velocity_0.50.png" width="1558" height="411" alt="t = 0.50: noisy image, predicted update, true update, and RGB RMS error."></a><figcaption>t = 0.50: noisy image, predicted update, true update, and RGB RMS error.</figcaption></figure>
+<figure class=""><a href="assets/parta/velocity_0.75.png"><img src="assets/parta/velocity_0.75.png" width="1558" height="411" alt="t = 0.75: noisy image, predicted update, true update, and RGB RMS error."></a><figcaption>t = 0.75: noisy image, predicted update, true update, and RGB RMS error.</figcaption></figure>
+</section>
+<section id="a15"><h3>1.5 Euler Denoising</h3>
+<p>Starting from t = 0.50, I took 25 updates and recomputed the velocity each time. The sequence below shows the initial state and every fifth update. Euler keeps sharper edges than one-step denoising, although it also changes some details.</p>
+<figure class=""><a href="assets/parta/trajectory.png"><img src="assets/parta/trajectory.png" width="1193" height="811" alt="Euler trajectory: t = 0.50, 0.60, 0.70, 0.80, 0.90, 1.00."></a><figcaption>Euler trajectory: t = 0.50, 0.60, 0.70, 0.80, 0.90, 1.00.</figcaption></figure>
+<figure class=""><a href="assets/parta/denoising_comparison.png"><img src="assets/parta/denoising_comparison.png" width="1593" height="411" alt="Original, Gaussian blur, one-step denoising, and Euler denoising from the same noisy input."></a><figcaption>Original, Gaussian blur, one-step denoising, and Euler denoising from the same noisy input.</figcaption></figure>
+<p>The MSEs were 0.04478 for blur, 0.01653 for one-step, and 0.01900 for Euler. Euler looks sharper here, but one-step stays closer to the original by this pixel-based measure.</p>
+</section>
+<section id="a16"><h3>1.6 Generating from Noise</h3>
+<p>I started from pure noise and sampled with “a high quality photo.” All five outputs are portraits. Some faces and bodies are distorted, so the generic prompt seems to favor people without reliably producing a clean photo.</p>
+<figure class=""><a href="assets/parta/conditional_samples.png"><img src="assets/parta/conditional_samples.png" width="1602" height="811" alt="Five conditional samples, seeds 180–184."></a><figcaption>Five conditional samples, seeds 180–184.</figcaption></figure>
+</section>
+<section id="a21"><h3>2.1 Classifier-Free Guidance</h3>
+<p>I combined the velocities as <code>v꜀ + 7(v꜀ − vᵤ)</code> and reused the same five noise seeds. The guided faces are much more coherent, but the framing and smooth portrait style are also more similar across the images.</p>
+<figure class=""><a href="assets/parta/cfg_samples.png"><img src="assets/parta/cfg_samples.png" width="1602" height="811" alt="CFG samples with the same seeds, 180–184."></a><figcaption>CFG samples with the same seeds, 180–184.</figcaption></figure>
+</section>
+<section id="a31"><h3>3.1 Image-to-Image Editing</h3>
+<p>I mixed each input with noise, then sampled with “a high quality photo.” Every grid uses starting times 0.02, 0.04, 0.06, 0.10, 0.14, 0.25, and 0.50. Smaller times leave less of the input and allow bigger changes.</p>
+<h4>Campanile</h4>
+<figure class=""><a href="assets/parta/edit_campanile.png"><img src="assets/parta/edit_campanile.png" width="1593" height="811" alt="Campanile: original and all seven starting times."></a><figcaption>Campanile: original and all seven starting times.</figcaption></figure>
+<h4>My building photo</h4>
+<figure class=""><a href="assets/parta/edit_building.png"><img src="assets/parta/edit_building.png" width="1593" height="811" alt="My building photo: original and all seven starting times."></a><figcaption>My building photo: original and all seven starting times.</figcaption></figure>
+<h4>My cow photo</h4>
+<figure class=""><a href="assets/parta/edit_cow.png"><img src="assets/parta/edit_cow.png" width="1593" height="811" alt="My cow photo: original and all seven starting times."></a><figcaption>My cow photo: original and all seven starting times.</figcaption></figure>
+<p>At low times, the building becomes unrelated portraits or objects, and the cow turns into dark objects with a similar shape. At t = 0.25 and 0.50, both inputs become recognizable again. The Campanile keeps its tall silhouette even when its details change.</p>
+<h4>Web Image and My Drawings</h4>
+<p>I used a downloaded bedroom image and my own house and flower drawings with the same seven starting times.</p>
+<figure class=""><a href="assets/parta/edit_web_image.png"><img src="assets/parta/edit_web_image.png" width="1593" height="811" alt="Web image: original and seven edits."></a><figcaption>Web image: original and seven edits.</figcaption></figure>
+<figure class=""><a href="assets/parta/edit_drawing_1.png"><img src="assets/parta/edit_drawing_1.png" width="1593" height="811" alt="House drawing: original and seven edits."></a><figcaption>House drawing: original and seven edits.</figcaption></figure>
+<figure class=""><a href="assets/parta/edit_drawing_2.png"><img src="assets/parta/edit_drawing_2.png" width="1593" height="811" alt="Flower drawing: original and seven edits."></a><figcaption>Flower drawing: original and seven edits.</figcaption></figure>
+<p>At low times, the bedroom turns into unrelated photos; by t = 0.25, the room layout comes back. The red roof survives earlier than the house details. The flower is recognizable by t = 0.06 and gains some shading around t = 0.14, while higher times stay close to my drawing.</p>
+</section>
+<section id="a32"><h3>3.2 Text-Guided Editing</h3>
+<p>I kept the same images, noise seed, and starting times, but replaced the generic prompt with a description of the edit I wanted.</p>
+<h4>Campanile → lighthouse</h4>
+<p>Prompt: “a photograph of a tall white lighthouse beside the ocean.”</p>
+<figure class=""><a href="assets/parta/text_edit_campanile.png"><img src="assets/parta/text_edit_campanile.png" width="1580" height="811" alt="Campanile → lighthouse: original and seven starting times."></a><figcaption>Campanile → lighthouse: original and seven starting times.</figcaption></figure>
+<h4>Building → castle</h4>
+<p>Prompt: “a photograph of a medieval stone castle entrance.”</p>
+<figure class=""><a href="assets/parta/text_edit_my_image_1.png"><img src="assets/parta/text_edit_my_image_1.png" width="1580" height="811" alt="Building → castle: original and seven starting times."></a><figcaption>Building → castle: original and seven starting times.</figcaption></figure>
+<h4>Cow → white cow in wildflowers</h4>
+<p>Prompt: “a photograph of a white cow grazing in a field of wildflowers.”</p>
+<figure class=""><a href="assets/parta/text_edit_my_image_2.png"><img src="assets/parta/text_edit_my_image_2.png" width="1580" height="811" alt="Cow → white cow in wildflowers: original and seven starting times."></a><figcaption>Cow → white cow in wildflowers: original and seven starting times.</figcaption></figure>
+<p>The prompts have the strongest effect at low starting times: the tower becomes a lighthouse, the entrance turns to stone, and the cow becomes lighter with flowers around it. At t = 0.14, the edits keep more of the original framing. At t = 0.50, the results mostly preserve the original photos.</p>
+</section>
+<section id="a33"><h3>3.3 Visual Anagrams</h3>
+<p>At each step, I predicted one velocity upright and another after rotating the image 180°. I rotated the second velocity back and averaged them before the Euler update.</p>
+<figure class=""><a href="assets/parta/anagram_0.png"><img src="assets/parta/anagram_0.png" width="793" height="411" alt="Prompts: “an oil painting of an owl” and “an oil painting of a cabin in the woods.”"></a><figcaption>Prompts: “an oil painting of an owl” and “an oil painting of a cabin in the woods.”</figcaption></figure>
+<figure class=""><a href="assets/parta/anagram_1.png"><img src="assets/parta/anagram_1.png" width="793" height="411" alt="Prompts: “an oil painting of a woman’s face” and “an oil painting of a bouquet of roses in a vase.”"></a><figcaption>Prompts: “an oil painting of a woman’s face” and “an oil painting of a bouquet of roses in a vase.”</figcaption></figure>
+<p>The face/roses pair works better for me. The roses become facial features upright and a bouquet upside down. The owl is clear in the other pair, but its eyes are still noticeable when I try to see the cabin.</p>
+</section>
+<section id="a34"><h3>3.4 Hybrid Images</h3>
+<p>I combined low frequencies from one guided velocity with high frequencies from the other. I used a Gaussian with σ = 16 and kernel size 265. The small views make the low-frequency shapes easier to see.</p>
+<h4>Lion / Sunflower</h4>
+<p>Close prompt: “a lithograph of a sunflower, close-up.” Distant prompt: “a lithograph of a lion&#x27;s face, front view.”</p>
+<div class="hybrid">
+<figure class=""><a href="assets/parta/hybrid_0.png"><img src="assets/parta/hybrid_0.png" width="512" height="512" alt="Close view."></a><figcaption>Close view.</figcaption></figure>
+<figure class="distant"><a href="assets/parta/hybrid_1.png"><img src="assets/parta/hybrid_1.png" width="64" height="64" alt="Distant view."></a><figcaption>Distant view.</figcaption></figure>
+</div>
+<h4>Butterfly / Flowers</h4>
+<p>Close prompt: “a lithograph of a field of flowers.” Distant prompt: “a lithograph of a butterfly.”</p>
+<div class="hybrid">
+<figure class=""><a href="assets/parta/hybrid_2.png"><img src="assets/parta/hybrid_2.png" width="512" height="512" alt="Close view."></a><figcaption>Close view.</figcaption></figure>
+<figure class="distant"><a href="assets/parta/hybrid_3.png"><img src="assets/parta/hybrid_3.png" width="64" height="64" alt="Distant view."></a><figcaption>Distant view.</figcaption></figure>
+</div>
+<p>The sunflower is clear up close, while the lion’s face is much subtler. The second image keeps flower details up close and forms a butterfly-like shape from farther away.</p>
+</section>
+</section>
+<section id="partb"><h2>Part B: Flow Matching from Scratch</h2>
+<p>I trained on the MNIST training split and used the test split for denoising examples. Pixels stay in [0, 1], and I draw fresh noise for each training batch.</p>
+<section id="b11"><h3>1.1 Building the UNet</h3>
+<p>My UNet downsamples 28 × 28 images to 14 × 14 and 7 × 7, then upsamples back to 28 × 28. Skip connections concatenate the earlier features into the upsampling path. Each convolution block uses batch normalization and GELU.</p>
+</section>
+<section id="b12"><h3>1.2 Adding Noise</h3>
+<p>I added Gaussian noise with <code>z = x + σε</code>. I kept the digit and noise fixed while changing σ, so the increasing corruption is easy to compare.</p>
+<figure class=""><a href="assets/partb/noise_levels.png"><img src="assets/partb/noise_levels.png" width="1043" height="196" alt="Noise levels σ = 0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0."></a><figcaption>Noise levels σ = 0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0.</figcaption></figure>
+</section>
+<section id="b121"><h3>1.2.1 Training a Denoiser</h3>
+<p>I trained with σ = 0.5 for 5 epochs, using D = 128, batch size 256, Adam, and learning rate 0.0001. The loss drops quickly, then improves more slowly. Most digits are readable after one epoch; by epoch 5, their outlines are a little cleaner.</p>
+<figure class="loss"><a href="assets/partb/denoise_loss.png"><img src="assets/partb/denoise_loss.png" width="779" height="290" alt="Denoising training loss. The orange line is a 100-step moving average."></a><figcaption>Denoising training loss. The orange line is a 100-step moving average.</figcaption></figure>
+<figure class=""><a href="assets/partb/denoise_epoch1.png"><img src="assets/partb/denoise_epoch1.png" width="980" height="334" alt="Epoch 1: clean test images, noisy inputs, and denoised outputs."></a><figcaption>Epoch 1: clean test images, noisy inputs, and denoised outputs.</figcaption></figure>
+<figure class=""><a href="assets/partb/denoise_epoch5.png"><img src="assets/partb/denoise_epoch5.png" width="980" height="334" alt="Epoch 5: clean test images, noisy inputs, and denoised outputs."></a><figcaption>Epoch 5: clean test images, noisy inputs, and denoised outputs.</figcaption></figure>
+</section>
+<section id="b122"><h3>1.2.2 Testing Other Noise Levels</h3>
+<p>I tested the same zero at every noise level. The model still removes most noise outside its training level of 0.5. At σ = 1.0, the outline becomes distorted and extra marks remain.</p>
+<figure class=""><a href="assets/partb/ood.png"><img src="assets/partb/ood.png" width="627" height="219" alt="Top: noisy inputs. Bottom: denoised results. Columns use the same seven σ values."></a><figcaption>Top: noisy inputs. Bottom: denoised results. Columns use the same seven σ values.</figcaption></figure>
+</section>
+<section id="b123"><h3>1.2.3 Denoising Pure Noise</h3>
+<p>I trained a fresh model with the same settings, but used noise that was independent of each target digit. The outputs all look like a similar blurry, overlapping digit shape, even after five epochs. There is no information in the input about which digit to predict, so minimizing MSE pushes the model toward the average training image instead of a distinct digit.</p>
+<figure class="loss"><a href="assets/partb/pure_noise_loss.png"><img src="assets/partb/pure_noise_loss.png" width="788" height="290" alt="Pure-noise training loss."></a><figcaption>Pure-noise training loss.</figcaption></figure>
+<figure class=""><a href="assets/partb/pure_noise_epoch1.png"><img src="assets/partb/pure_noise_epoch1.png" width="885" height="219" alt="Epoch 1: independent noise inputs and generated outputs."></a><figcaption>Epoch 1: independent noise inputs and generated outputs.</figcaption></figure>
+<figure class=""><a href="assets/partb/pure_noise_epoch5.png"><img src="assets/partb/pure_noise_epoch5.png" width="885" height="219" alt="Epoch 5: independent noise inputs and generated outputs."></a><figcaption>Epoch 5: independent noise inputs and generated outputs.</figcaption></figure>
+</section>
+<section id="b21"><h3>2.1 Time Conditioning</h3>
+<p>I added two fully connected blocks that embed t and multiply the features after unflattening and the first upsampling block. The model predicts velocity <code>x₁ − x₀</code> from <code>xₜ = (1 − t)x₀ + tx₁</code>, rather than directly predicting a clean digit.</p>
+</section>
+<section id="b22"><h3>2.2 Training the Time-Conditioned Model</h3>
+<p>I used D = 64, batch size 64, and Adam for 10 epochs. The learning rate starts at 0.01 and is multiplied by 0.1^(1/10) after each epoch. Each image gets a random time in [0, 1] and fresh Gaussian noise.</p>
+<figure class="loss"><a href="assets/partb/time_loss.png"><img src="assets/partb/time_loss.png" width="790" height="290" alt="Time-conditioned flow-matching loss."></a><figcaption>Time-conditioned flow-matching loss.</figcaption></figure>
+</section>
+<section id="b23"><h3>2.3 Sampling with Time Conditioning</h3>
+<p>I sampled from the same 40 initial noise images using 50 Euler steps. At epoch 1, many outputs look like disconnected strokes. By epochs 5 and 10, more digits are readable, though some shapes are still ambiguous.</p>
+<figure class=""><a href="assets/partb/time_epoch1.png"><img src="assets/partb/time_epoch1.png" width="1029" height="449" alt="Time-conditioned samples after epoch 1."></a><figcaption>Time-conditioned samples after epoch 1.</figcaption></figure>
+<figure class=""><a href="assets/partb/time_epoch5.png"><img src="assets/partb/time_epoch5.png" width="1029" height="449" alt="Time-conditioned samples after epoch 5."></a><figcaption>Time-conditioned samples after epoch 5.</figcaption></figure>
+<figure class=""><a href="assets/partb/time_epoch10.png"><img src="assets/partb/time_epoch10.png" width="1029" height="449" alt="Time-conditioned samples after epoch 10."></a><figcaption>Time-conditioned samples after epoch 10.</figcaption></figure>
+</section>
+<section id="b24"><h3>2.4 Adding Class Conditioning</h3>
+<p>I encoded each label as a one-hot vector and used two more fully connected blocks. At each conditioned layer, I combined the embeddings as <code>class_embedding × features + time_embedding</code>. I set the class vector to zero for 10% of training examples so the model also learns an unconditional prediction.</p>
+</section>
+<section id="b25"><h3>2.5 Training the Class-Conditioned Model</h3>
+<p>I kept the same width, batch size, optimizer, and 10-epoch learning-rate schedule as the time-only model. The loss falls quickly and then levels off.</p>
+<figure class="loss"><a href="assets/partb/class_loss.png"><img src="assets/partb/class_loss.png" width="790" height="290" alt="Class-conditioned flow-matching loss."></a><figcaption>Class-conditioned flow-matching loss.</figcaption></figure>
+</section>
+<section id="b26"><h3>2.6 Class-Conditioned Sampling</h3>
+<p>I used 300 Euler steps and guidance <code>vᵤ + 5(v꜀ − vᵤ)</code>. Each column is a digit from 0 to 9, with four examples per digit. The classes are already recognizable after epoch 1, and the later samples have cleaner strokes than the time-only model.</p>
+<figure class=""><a href="assets/partb/class_epoch1.png"><img src="assets/partb/class_epoch1.png" width="1029" height="449" alt="Class-conditioned samples after epoch 1; columns 0–9."></a><figcaption>Class-conditioned samples after epoch 1; columns 0–9.</figcaption></figure>
+<figure class=""><a href="assets/partb/class_epoch5.png"><img src="assets/partb/class_epoch5.png" width="1029" height="449" alt="Class-conditioned samples after epoch 5; columns 0–9."></a><figcaption>Class-conditioned samples after epoch 5; columns 0–9.</figcaption></figure>
+<figure class=""><a href="assets/partb/class_epoch10.png"><img src="assets/partb/class_epoch10.png" width="1029" height="449" alt="Class-conditioned samples after epoch 10; columns 0–9."></a><figcaption>Class-conditioned samples after epoch 10; columns 0–9.</figcaption></figure>
+<h4>Removing the Learning-Rate Scheduler</h4>
+<p>I trained a separate model for 10 epochs with a constant learning rate of 0.001 instead of starting at 0.01 and decaying it. The smaller fixed steps avoid keeping the learning rate too large late in training. I used the same initialization, data order, and sample seeds for both runs.</p>
+<figure class="loss"><a href="assets/partb/no_scheduler_loss.png"><img src="assets/partb/no_scheduler_loss.png" width="790" height="290" alt="Training loss without the scheduler, constant learning rate 0.001."></a><figcaption>Training loss without the scheduler, constant learning rate 0.001.</figcaption></figure>
+<figure class=""><a href="assets/partb/no_scheduler_epoch10.png"><img src="assets/partb/no_scheduler_epoch10.png" width="1029" height="449" alt="No-scheduler results after epoch 10; four examples per digit."></a><figcaption>No-scheduler results after epoch 10; four examples per digit.</figcaption></figure>
+<p>The fixed-rate results look about as readable as the scheduled results above. Both produce recognizable digits in the requested columns. There are small differences in stroke shape and thickness, but I don’t see a clear quality drop from removing the scheduler in these samples.</p>
+</section>
+</section>
+</main></body></html>
